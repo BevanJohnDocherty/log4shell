@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: log4shell
+spec:
+  selector:
+    matchLabels:
+      run: log4shell
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        run: log4shell
+    spec:
+      containers:
+        - name: app
+          image: bdocherty/vulnerable-app 
+          imagePullPolicy: Always
+          command:
+            - "/entrypoint.sh"
+          ports:
+            - containerPort: 8080
+              name: web
